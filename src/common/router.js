@@ -37,8 +37,6 @@ const dynamicWrapper = (app, models, component) => {
     };
   }
 
-
-
   // () => import('module')
   return Loadable({
     loader: () => {
@@ -74,32 +72,23 @@ function getFlatMenuData(menus) {
   return keys;
 }
 
-
 // 得到最终计算出来的 路由组件
 export const getRouterData = app => {
-
   // routerConfig 的 key 值可以为 /dashboard/:id, /icon/:foo(\\d+)
   const routerConfig = {
     '/': {
       // 此处 dynamicWrapper 的第二个参数是 models , 表明这个组件用到的 redux 文件！？
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
-    '/dashboard/analysis': {
-      component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
-    },
-    '/dashboard/monitor': {
-      component: dynamicWrapper(app, ['monitor'], () => import('../routes/Dashboard/Monitor')),
-    },
-    '/dashboard/workplace': {
+    '/workspace': {
       component: dynamicWrapper(app, ['project', 'activities', 'chart'], () =>
         import('../routes/Dashboard/Workplace')
       ),
-      // hideInBreadcrumb: true,
-      // name: '工作台',
-      // authority: 'admin',
     },
 
-
+    '/charts': {
+      component: dynamicWrapper(app, [], () => import('../routes/Charts/Index.js')),
+    },
 
     '/exception/403': {
       component: dynamicWrapper(app, [], () => import('../routes/Exception/403')),
@@ -138,19 +127,16 @@ export const getRouterData = app => {
   // menuData = { '/dashboard': {name: .., icon: .., path: ..}, '/dashboard/analysis': ... }
   const menuData = getFlatMenuData(getMenuData());
 
-
-
   // Route configuration data
   // eg. {name,authority ...routerConfig }
   const routerData = {};
-
 
   // The route matches the menu
   // 将 routerConfig 和 menu.js 匹配 合并，生成最终的 routerData
   Object.keys(routerConfig).forEach(path => {
     // Regular match item name
     // eg.  router /user/:id === /user/chen
-    const params = [] // router path (如 /dashboard/:id) 定义的变量
+    const params = []; // router path (如 /dashboard/:id) 定义的变量
     const pathRegexp = pathToRegexp(path, params);
     const menuKey = Object.keys(menuData).find(key => pathRegexp.test(`${key}`));
 
@@ -171,7 +157,6 @@ export const getRouterData = app => {
     };
     routerData[path] = router;
   });
-
 
   return routerData;
 };

@@ -9,9 +9,6 @@ export async function queryActivities() {
   return request('/api/activities');
 }
 
-
-
-
 export async function fakeChartData() {
   return request('/api/fake_chart_data');
 }
@@ -19,8 +16,6 @@ export async function fakeChartData() {
 export async function queryTags() {
   return request('/api/tags');
 }
-
-
 
 export async function fakeAccountLogin(params) {
   return request('/api/login/account', {
@@ -38,4 +33,12 @@ export async function fakeRegister(params) {
 
 export async function queryNotices() {
   return request('/api/notices');
+}
+
+// 图表模板列表
+export async function queryCharts(params) {
+  return request('/api/charts', {
+    method: 'GET',
+    params,
+  });
 }
