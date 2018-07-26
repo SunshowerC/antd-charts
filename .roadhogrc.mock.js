@@ -2,6 +2,7 @@ import mockjs from 'mockjs';
 
 import { getActivities, getNotice, getFakeList } from './mock/api';
 import { getFakeChartData } from './mock/chart';
+import { getChartsList } from './mock/chartsList';
 
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
@@ -11,6 +12,8 @@ const noProxy = process.env.NO_PROXY === 'true';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
+  'GET /api/charts': getChartsList,
+
   // 支持值为 Object 和 Array
   'GET /api/currentUser': {
     $desc: '获取当前用户接口',
@@ -50,7 +53,6 @@ const proxy = {
   ],
   'GET /api/project/notice': getNotice,
   'GET /api/activities': getActivities,
-
 
   'GET /api/tags': mockjs.mock({
     'list|100': [{ name: '@city', 'value|1-100': 150, 'type|0-2': 1 }],

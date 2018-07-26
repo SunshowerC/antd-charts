@@ -10,6 +10,7 @@ module.exports = {
     jasmine: true,
   },
   rules: {
+    'no-unused-expressions': ['error', { allowShortCircuit: true }],
     'no-unused-vars': 0,
     'generator-star-spacing': [0],
     'consistent-return': [0],
@@ -21,6 +22,7 @@ module.exports = {
     'react/prop-types': [0],
     'react/prefer-stateless-function': [0],
     'react/jsx-one-expression-per-line': [0],
+    'react/destructuring-assignment': 0,
     'react/jsx-wrap-multilines': [
       'error',
       {

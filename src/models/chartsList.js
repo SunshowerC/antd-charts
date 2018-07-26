@@ -11,6 +11,7 @@ export default {
   effects: {
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryCharts, payload);
+
       yield put({
         type: 'save',
         payload: response,
@@ -38,7 +39,7 @@ export default {
     save(state, action) {
       return {
         ...state,
-        data: action.payload,
+        ...action.payload,
       };
     },
   },
