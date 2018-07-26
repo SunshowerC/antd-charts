@@ -39,11 +39,8 @@ const getRedirect = item => {
     }
   }
 };
-const mData = getMenuData()
+const mData = getMenuData();
 mData.forEach(getRedirect);
-
-
-
 
 /**
  * 获取面包屑映射
@@ -93,12 +90,6 @@ let isMobile;
 enquireScreen(b => {
   isMobile = b;
 });
-
-
-
-
-
-
 
 /**
  * 渲染主题路由内容， 如果无权限（前面已经经过了登录权限校验，所以到这里的渲染肯定是登录了的），重定向到 403
@@ -228,7 +219,10 @@ class BasicLayout extends React.PureComponent {
     const { isMobile: mb } = this.state;
     const bashRedirect = this.getBaseRedirect();
     // const routes = getRoutes(match.path, routerData)
-
+    const mainContentStyle = {
+      transition: 'margin-left .2s',
+      marginLeft: collapsed ? '80px' : '256px',
+    };
 
     const layout = (
       <Layout>
@@ -244,7 +238,7 @@ class BasicLayout extends React.PureComponent {
           isMobile={mb}
           onCollapse={this.handleMenuCollapse}
         />
-        <Layout>
+        <Layout style={mainContentStyle}>
           <Header style={{ padding: 0 }}>
             <GlobalHeader
               logo={logo}
@@ -261,7 +255,7 @@ class BasicLayout extends React.PureComponent {
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <Switch>
-              { /* 如果redirect 中的 URL 被匹配, 自动重定向 */}
+              {/* 如果redirect 中的 URL 被匹配, 自动重定向 */}
               {redirectData.map(item => (
                 <Redirect key={item.from} exact from={item.from} to={item.to} />
               ))}

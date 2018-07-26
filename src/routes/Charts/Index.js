@@ -18,6 +18,7 @@ import {
   message,
   Badge,
   Divider,
+  Table,
 } from 'antd';
 import StandardTable from 'components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -98,9 +99,7 @@ export default class Workplace extends PureComponent {
           <Fragment>
             <a href="">查看</a>
             <Divider type="vertical" />
-            <a href="">修改</a>
-            <Divider type="vertical" />
-            <a href="">删除</a>
+            <a href="">克隆</a>
           </Fragment>
         ),
       },
@@ -123,12 +122,12 @@ export default class Workplace extends PureComponent {
             </span>
           )}
         </div>
-        <StandardTable
+        <Table
           bordered
           rowKey="id"
-          selectedRows={selectedRows}
           loading={loading}
-          data={chartsList}
+          dataSource={chartsList.list}
+          pagination={chartsList.pagination}
           columns={columns}
           // onSelectRow={this.handleSelectRows}
           onChange={this.handleStandardTableChange}
